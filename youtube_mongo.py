@@ -31,7 +31,7 @@ st.title(':red[Youtube Data Harvesting]')
 
 
 # Data collection zone
-col1, col2 = st.columns(2)
+col1, col2, col3 = st.columns(3)
 with col1:
     st.header(':violet[Data collection zone]')
     st.write ('(Note:- This zone **collect data** by using channel id and **stored it in the :green[MongoDB] database**.)')
@@ -387,8 +387,8 @@ with col2:
 
         # Create a new database and use
         mycursor = connect.cursor()
-        mycursor.execute("CREATE DATABASE IF NOT EXISTS youtube_db")
 
+        mycursor.execute("CREATE DATABASE IF NOT EXISTS youtube_db")
         # Close the cursor and database connection
         mycursor.close()
         connect.close()
@@ -397,7 +397,6 @@ with col2:
         engine = create_engine('mysql+mysqlconnector://root:12345678@localhost/youtube_db', echo=False)
 
         # Use pandas to insert the DataFrames data to the SQL Database -> table1
-
         # Channel data to SQL
         channel_df.to_sql('channel', engine, if_exists='append', index=False,
                         dtype = {"Channel_Name": sqlalchemy.types.VARCHAR(length=225),
@@ -438,6 +437,49 @@ with col2:
                                 'Comment_Published_date': sqlalchemy.types.String(length=50),})
 
 
+with col3:
+    # Function to delete repeated channel information from the database
+    def delete_channel_data(channel_name):
+        try:
+            # Establish a connection to the MySQL server
+            connection = mysql.connector.connect(
+            host='localhost',
+            user='root',
+            password='12345678',
+            database='youtube_db'
+            )
+
+            # Create a cursor object to execute SQL queries
+            cursor = connection.cursor()
+
+            # SQL query to delete repeated channel information
+            sql_query = "DELETE FROM channel WHERE Channel_Name = %s"
+
+            # Execute the SQL query
+            cursor.execute(sql_query, (channel_name,))
+
+            # Commit the changes
+            connection.commit()
+
+            st.success(f"Channel information for '{channel_name}' deleted successfully!")
+        except mysql.connector.Error as error:
+            st.error(f"Error deleting channel information: {error}")
+        finally:
+            # Close the cursor and connection
+            cursor.close()
+            connection.close()
+
+    st.header(':violet[Delete channel info]')
+
+    # User input for the channel name to delete
+    channel_name = st.text_input("Enter the channel name to delete:")
+
+    # Button to trigger deletion
+    if st.button("Delete Channel Information"):
+        if channel_name:
+            delete_channel_data(channel_name)
+        else:
+            st.warning("Please enter a channel name.")
 
 # ====================================================   /     Channel Analysis zone     /   ================================================= #
 
@@ -593,5 +635,6 @@ elif question_tosql == '10. Which videos have the highest number of comments, an
 
 # SQL DB connection close
 connect_for_question.close()
+
 
 # ===============================================   /   COMPLETED   /   ====================================================================== #
