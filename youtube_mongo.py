@@ -480,7 +480,7 @@ question_tosql = st.selectbox('**Select your Question**',
 '10. Which videos have the highest number of comments, and what are their corresponding channel names?'), key = 'collection_question')
 
 # Creat a connection to SQL
-connect_for_question = pymysql.connect(host='localhost', user='root', password='root', db='youtube_db')
+connect_for_question = pymysql.connect(host='localhost', user='root', password='12345678', db='youtube_db')
 cursor = connect_for_question.cursor()
 
 # Q1
