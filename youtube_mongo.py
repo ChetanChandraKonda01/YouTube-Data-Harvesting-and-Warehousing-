@@ -26,7 +26,8 @@ import plotly.express as px
 st.set_page_config(layout='wide')
 
 # Title
-st.title(':red[Youtube Data Harvesting]')
+st.markdown("<h1 style='text-align: center; color: Teal;'>Youtube Data Harvesting</h1>", unsafe_allow_html=True)
+
 
 
 
@@ -34,10 +35,10 @@ st.title(':red[Youtube Data Harvesting]')
 col1, col2, col3 = st.columns(3)
 with col1:
     st.header(':violet[Data collection zone]')
-    st.write ('(Note:- This zone **collect data** by using channel id and **stored it in the :green[MongoDB] database**.)')
+    st.write ('(Note:- This zone **collects data** by using channel id and **stores it in the :green[MongoDB] database**.)')
     channel_id = st.text_input('**Enter 11 digit channel_id**')
-    st.write('''Get data and stored it in the MongoDB database to click below **:blue['Get data and stored']**.''')
-    Get_data = st.button('**Get data and stored**')
+    st.write('''click below button **:blue['Get data']**.''')
+    Get_data = st.button('**Get data**')
 
     # Define Session state to Get data button
     if "Get_state" not in st.session_state:
@@ -280,8 +281,7 @@ with col1:
 
 with col2:
     st.header(':violet[Data Migrate zone]')
-    st.write ('''(Note:- This zone specific channel data **Migrate to :blue[MySQL] database from  :green[MongoDB] database** depending on your selection,
-                if unavailable your option first collect data.)''')
+    st.write ('''(**Migrate to :blue[MySQL] database from  :green[MongoDB] database** depending on your selection.)''')
     
      # Connect to the MongoDB server
     client = pymongo.MongoClient("mongodb://localhost:27017/")
@@ -297,7 +297,7 @@ with col2:
     for document in collection.find():
         document_names.append(document["Channel_Name"])
     document_name = st.selectbox('**Select Channel name**', options = document_names, key='document_names')
-    st.write('''Migrate to MySQL database from MongoDB database to click below **:blue['Migrate to MySQL']**.''')
+    st.write('''click below button **:blue['Migrate to MySQL']**.''')
     Migrate = st.button('**Migrate to MySQL**')
     
      # Define Session state to Migrate to MySQL button
@@ -483,11 +483,11 @@ with col3:
 
 # ====================================================   /     Channel Analysis zone     /   ================================================= #
 
-st.header(':violet[Channel Data Analysis zone]')
-st.write ('''(Note:- This zone **Analysis of a collection of channel data** depends on your question selection and gives a table format output.)''')
+st.header(':violet[Channel Data]')
+st.write ('''(click the button below to get your channel names)''')
 
 # Check available channel data
-Check_channel = st.checkbox('**Check available channel data for analysis**')
+Check_channel = st.button('**Check available channels**')
 
 if Check_channel:
    # Create database connection
