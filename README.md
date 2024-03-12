@@ -14,7 +14,7 @@
 ## Storage in MongoDB:
 * Stores the processed data into a MongoDB database.
 * MongoDB is a NoSQL database that allows flexible storage of structured and semi-structured data.
-## Optional Migration to MySQL:
+## Migration to MySQL:
 * Provides the option to migrate the stored data from MongoDB to MySQL.
 * MySQL is a relational database management system (RDBMS) that allows for structured storage and querying of data.
 ## Data Analysis and Insights:
