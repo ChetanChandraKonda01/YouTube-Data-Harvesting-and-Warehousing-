@@ -49,7 +49,7 @@ with col1:
         # Access youtube API
         api_service_name = 'youtube'
         api_version = 'v3'
-        api_key = 'AIzaSyC9fM5St1Dh-L98E_D67N-xKRtZAvO0Li4'
+        api_key = 'your-api-key'
         youtube = build(api_service_name,api_version,developerKey =api_key)
 
         
@@ -381,8 +381,8 @@ with col2:
         # Connect to the MySQL server
         connect = mysql.connector.connect(
         host = "localhost",
-        user = "root",
-        password = "12345678",
+        user = "your-username",
+        password = "your-password",
         auth_plugin = "mysql_native_password")
 
         # Create a new database and use
@@ -394,7 +394,7 @@ with col2:
         connect.close()
 
         # Connect to the new created database
-        engine = create_engine('mysql+mysqlconnector://root:12345678@localhost/youtube_db', echo=False)
+        engine = create_engine('mysql+mysqlconnector://username:your-password@localhost/youtube_db', echo=False)
 
         # Use pandas to insert the DataFrames data to the SQL Database -> table1
         # Channel data to SQL
@@ -444,8 +444,8 @@ with col3:
             # Establish a connection to the MySQL server
             connection = mysql.connector.connect(
             host='localhost',
-            user='root',
-            password='12345678',
+            user='your-username',
+            password='your-password',
             database='youtube_db'
             )
 
@@ -491,7 +491,7 @@ Check_channel = st.button('**Check available channels**')
 
 if Check_channel:
    # Create database connection
-    engine = create_engine('mysql+mysqlconnector://root:12345678@localhost/youtube_db', echo=False)
+    engine = create_engine('mysql+mysqlconnector://your-username:your-password@localhost/youtube_db', echo=False)
     # Execute SQL query to retrieve channel names
     query = "SELECT Channel_Name FROM channel;"
     results = pd.read_sql(query, engine)
